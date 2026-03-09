@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENERGY.AI JUNIOR — Умный ассистент</title>
+    <title>ENERGY.AI — Чат на основе DeepSeek</title>
     <style>
         * {
             margin: 0;
@@ -12,222 +12,193 @@
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f0f2f5;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
         }
 
-        .container {
-            max-width: 1000px;
+        .chat-container {
             width: 100%;
+            max-width: 900px;
+            height: 90vh;
             background: white;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 24px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
         }
 
-        .header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            padding: 30px;
-            text-align: center;
+        .chat-header {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
             color: white;
-        }
-
-        .header h1 {
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 16px;
-            opacity: 0.9;
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            height: 600px;
-        }
-
-        /* Левая панель */
-        .sidebar {
-            background: #f8f9fa;
-            padding: 20px;
-            border-right: 1px solid #e9ecef;
-        }
-
-        .personality-section {
-            margin-bottom: 30px;
-        }
-
-        .section-title {
-            font-size: 14px;
-            text-transform: uppercase;
-            color: #6c757d;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .personality-btn {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 10px;
-            border: 2px solid #e9ecef;
-            border-radius: 12px;
-            background: white;
-            cursor: pointer;
-            transition: 0.3s;
-            text-align: left;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .personality-btn.active {
-            border-color: #667eea;
-            background: #f0f3ff;
-            box-shadow: 0 4px 12px rgba(102,126,234,0.2);
-        }
-
-        .personality-btn small {
-            display: block;
-            font-size: 12px;
-            color: #6c757d;
-            margin-top: 4px;
-            font-weight: normal;
-        }
-
-        .voice-settings {
-            margin-bottom: 30px;
-        }
-
-        .voice-btn {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 8px;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            background: white;
-            cursor: pointer;
-            transition: 0.2s;
+            padding: 20px 24px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .voice-btn.active {
-            background: #e7f3ff;
-            border-color: #667eea;
-        }
-
-        .voice-btn i {
-            width: 20px;
-            color: #667eea;
-        }
-
-        .status-indicator {
-            background: white;
-            padding: 15px;
+        .header-icon {
+            width: 40px;
+            height: 40px;
+            background: #00c6a7;
             border-radius: 12px;
-            border: 1px solid #e9ecef;
-        }
-
-        .status-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            color: #495057;
-            font-size: 14px;
+            justify-content: center;
+            font-size: 20px;
         }
 
-        .status-item i {
-            color: #667eea;
+        .header-text h1 {
+            font-size: 18px;
+            margin-bottom: 4px;
         }
 
-        /* Правая панель - чат */
-        .chat-area {
-            display: flex;
-            flex-direction: column;
-            height: 600px;
+        .header-text p {
+            font-size: 13px;
+            opacity: 0.7;
         }
 
         .chat-messages {
             flex: 1;
             overflow-y: auto;
-            padding: 20px;
-            background: #ffffff;
+            padding: 24px;
+            background: #fafafa;
         }
 
         .message {
-            margin-bottom: 20px;
             display: flex;
+            margin-bottom: 24px;
+            gap: 12px;
         }
 
         .message.user {
-            justify-content: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .bot .avatar {
+            background: #00c6a7;
+            color: white;
+        }
+
+        .user .avatar {
+            background: #404040;
+            color: white;
         }
 
         .message-content {
             max-width: 70%;
             padding: 12px 16px;
-            border-radius: 16px;
+            border-radius: 18px;
             font-size: 14px;
             line-height: 1.5;
             position: relative;
         }
 
-        .message.bot .message-content {
-            background: #f0f3ff;
-            color: #1a1a1a;
+        .bot .message-content {
+            background: white;
+            border: 1px solid #e5e7eb;
             border-bottom-left-radius: 4px;
+            color: #1f2937;
         }
 
-        .message.user .message-content {
-            background: #667eea;
+        .user .message-content {
+            background: #00c6a7;
             color: white;
             border-bottom-right-radius: 4px;
         }
 
         .message-time {
             font-size: 11px;
-            color: #adb5bd;
-            margin-top: 5px;
+            color: #9ca3af;
+            margin-top: 4px;
             text-align: right;
         }
 
-        .input-area {
-            padding: 20px;
-            background: #f8f9fa;
-            border-top: 1px solid #e9ecef;
+        .typing-indicator {
             display: flex;
-            gap: 10px;
+            gap: 4px;
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            width: fit-content;
         }
 
-        .input-area input {
-            flex: 1;
-            padding: 15px 20px;
-            border: 2px solid #e9ecef;
-            border-radius: 25px;
-            font-size: 14px;
-            transition: 0.2s;
-            outline: none;
-        }
-
-        .input-area input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
-        }
-
-        .input-area button {
-            width: 50px;
-            height: 50px;
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #9ca3af;
             border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.6; }
+            30% { transform: translateY(-4px); opacity: 1; }
+        }
+
+        .chat-input {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #e5e7eb;
+            border-radius: 30px;
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s;
+            background: #f9fafb;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #00c6a7;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(0,198,167,0.1);
+        }
+
+        .input-wrapper input:disabled {
+            background: #f3f4f6;
+            cursor: not-allowed;
+        }
+
+        .send-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #00c6a7;
             border: none;
-            background: #667eea;
             color: white;
+            font-size: 18px;
             cursor: pointer;
             transition: 0.2s;
             display: flex;
@@ -235,18 +206,35 @@
             justify-content: center;
         }
 
-        .input-area button:hover {
+        .send-btn:hover:not(:disabled) {
             transform: scale(1.1);
-            background: #5a67d8;
+            background: #009f8a;
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         .mic-btn {
-            background: #48bb78 !important;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            color: #4b5563;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .mic-btn.listening {
+            background: #ef4444;
+            color: white;
             animation: pulse 1s infinite;
-            background: #f56565 !important;
         }
 
         @keyframes pulse {
@@ -255,154 +243,276 @@
             100% { transform: scale(1); }
         }
 
-        .welcome-message {
-            text-align: center;
-            color: #6c757d;
-            padding: 40px;
+        .suggestions {
+            display: flex;
+            gap: 8px;
+            padding: 0 20px 20px 20px;
+            flex-wrap: wrap;
         }
 
-        .welcome-message i {
-            font-size: 48px;
-            color: #667eea;
-            margin-bottom: 20px;
+        .suggestion-chip {
+            padding: 8px 16px;
+            background: #f3f4f6;
+            border-radius: 30px;
+            font-size: 13px;
+            color: #4b5563;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid #e5e7eb;
+        }
+
+        .suggestion-chip:hover {
+            background: #e5e7eb;
+            border-color: #00c6a7;
+        }
+
+        .model-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            font-size: 11px;
+            margin-left: 8px;
         }
     </style>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>ENERGY.AI JUNIOR</h1>
-            <p>Умный ассистент по энергоэффективности</p>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="header-icon">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <div class="header-text">
+                <h1>ENERGY.AI — DeepSeek Edition</h1>
+                <p>Нейросеть для вопросов об энергоэффективности</p>
+            </div>
         </div>
 
-        <div class="main-content">
-            <!-- Левая панель -->
-            <div class="sidebar">
-                <div class="personality-section">
-                    <div class="section-title">Выберите стиль общения</div>
-                    <button class="personality-btn active" data-personality="friend">
-                        🤝 Друг
-                        <small>Простой и дружелюбный</small>
-                    </button>
-                    <button class="personality-btn" data-personality="expert">
-                        👨‍🔬 Эксперт
-                        <small>Профессиональный и точный</small>
-                    </button>
-                    <button class="personality-btn" data-personality="motivator">
-                        💪 Мотиватор
-                        <small>Энергичный и позитивный</small>
-                    </button>
-                    <button class="personality-btn" data-personality="teacher">
-                        👩‍🏫 Наставник
-                        <small>Обучающий и подробный</small>
-                    </button>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot">
+                <div class="avatar">
+                    <i class="fas fa-robot"></i>
                 </div>
-
-                <div class="voice-settings">
-                    <div class="section-title">Голос ассистента</div>
-                    <button class="voice-btn active" data-voice="ru-RU-male">
-                        <i class="fas fa-user"></i>
-                        Александр (мужской)
-                    </button>
-                    <button class="voice-btn" data-voice="ru-RU-female">
-                        <i class="fas fa-user-circle"></i>
-                        Елена (женский)
-                    </button>
-                    <button class="voice-btn" data-voice="en-US-male">
-                        <i class="fas fa-globe"></i>
-                        John (English)
-                    </button>
-                </div>
-
-                <div class="status-indicator">
-                    <div class="status-item">
-                        <i class="fas fa-microphone"></i>
-                        <span id="speechStatus">Готов к работе</span>
-                    </div>
-                    <div class="status-item" style="margin-top: 10px;">
-                        <i class="fas fa-comment"></i>
-                        <span id="personalityStatus">Режим: Друг</span>
-                    </div>
+                <div class="message-content">
+                    Здравствуйте! Я ENERGY.AI на основе архитектуры DeepSeek. 
+                    Могу помочь с вопросами об энергоэффективности, рассказать о проекте или просто поболтать.
+                    
+                    <div class="message-time">Только что</div>
                 </div>
             </div>
+        </div>
 
-            <!-- Правая панель - чат -->
-            <div class="chat-area">
-                <div class="chat-messages" id="chatMessages">
-                    <div class="welcome-message" id="welcomeMessage">
-                        <i class="fas fa-robot"></i>
-                        <h3>Привет! Я ENERGY.AI</h3>
-                        <p>Задай любой вопрос о проекте, энергоэффективности или просто поболтай со мной</p>
-                    </div>
-                </div>
+        <div class="suggestions" id="suggestions">
+            <span class="suggestion-chip" onclick="useSuggestion('Что такое ENERGY.AI?')">Что такое ENERGY.AI?</span>
+            <span class="suggestion-chip" onclick="useSuggestion('Сколько стоит?')">Сколько стоит?</span>
+            <span class="suggestion-chip" onclick="useSuggestion('Как это работает?')">Как это работает?</span>
+            <span class="suggestion-chip" onclick="useSuggestion('Экономия энергии')">Экономия энергии</span>
+        </div>
 
-                <div class="input-area">
-                    <input type="text" id="userInput" placeholder="Напишите сообщение..." onkeypress="if(event.key === 'Enter') sendMessage()">
-                    <button class="mic-btn" id="micBtn" onclick="toggleListening()">
-                        <i class="fas fa-microphone"></i>
-                    </button>
-                    <button onclick="sendMessage()">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
+        <div class="chat-input">
+            <button class="mic-btn" id="micBtn" onclick="toggleListening()">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <div class="input-wrapper">
+                <input type="text" id="userInput" placeholder="Спросите о проекте..." onkeypress="if(event.key === 'Enter') sendMessage()">
             </div>
+            <button class="send-btn" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
         </div>
     </div>
 
     <script>
-        // ==================== НАСТРОЙКИ ГОЛОСА ====================
-        let synth = window.speechSynthesis;
-        let currentVoice = 'ru-RU-male';
-        let voices = [];
+        // ==================== НАСТРОЙКИ ====================
+        let isTyping = false;
+        let messageHistory = [];
         
-        // Загружаем голоса
-        function loadVoices() {
-            voices = synth.getVoices();
-        }
-        
-        if (synth) {
-            loadVoices();
-            if (speechSynthesis.onvoiceschanged !== undefined) {
-                speechSynthesis.onvoiceschanged = loadVoices;
-            }
-        }
-
-        function speak(text) {
-            if (!synth) {
-                alert('Синтез речи не поддерживается в вашем браузере');
-                return;
-            }
-
-            synth.cancel(); // Останавливаем предыдущую речь
-
-            const utterance = new SpeechSynthesisUtterance(text);
+        // ==================== БАЗА ЗНАНИЙ ====================
+        const knowledgeBase = {
+            // Приветствия
+            'привет|здравствуйте|добрый день': [
+                'Здравствуйте! Чем могу помочь?',
+                'Привет! Спрашивайте о проекте или энергоэффективности',
+                'Добрый день! Я готов ответить на ваши вопросы'
+            ],
             
-            // Настройки голоса
-            utterance.rate = 0.9; // Немного медленнее
-            utterance.pitch = 1;
-            utterance.volume = 1;
+            // О проекте
+            'что такое energy|о проекте|energy.ai': [
+                'ENERGY.AI JUNIOR — это интеллектуальная платформа для мониторинга энергопотребления. Мы помогаем бизнесу снижать счета за электричество на 15-25% без замены оборудования.',
+                'Наш проект объединяет IoT-датчики, облачные технологии и искусственный интеллект для анализа энергопотребления в реальном времени.',
+                'ENERGY.AI — это ваш личный энергоменеджер, который следит за каждым киловаттом и дает рекомендации по оптимизации.'
+            ],
             
-            // Выбираем голос
-            if (voices.length > 0) {
-                if (currentVoice === 'ru-RU-male') {
-                    // Ищем мужской русский голос
-                    const ruMaleVoice = voices.find(v => v.lang.includes('ru') && v.name.includes('Alexander'));
-                    utterance.voice = ruMaleVoice || voices.find(v => v.lang.includes('ru'));
-                } else if (currentVoice === 'ru-RU-female') {
-                    // Ищем женский русский голос
-                    const ruFemaleVoice = voices.find(v => v.lang.includes('ru') && v.name.includes('Milena'));
-                    utterance.voice = ruFemaleVoice || voices.find(v => v.lang.includes('ru'));
-                } else {
-                    // Английский голос
-                    utterance.voice = voices.find(v => v.lang.includes('en'));
+            // Стоимость
+            'сколько стоит|цена|стоимость|тариф': [
+                'У нас гибкая система тарифов:\n• Базовый: 12 000 ₽/мес (до 10 точек учета)\n• Оптимальный: 25 000 ₽/мес (до 30 точек)\n• Премиум: 40 000 ₽/мес (неограниченно)\n\nДля первых клиентов доступен бесплатный пилотный проект!',
+                'Стоимость зависит от масштаба предприятия. Могу рассчитать индивидуально под ваш бизнес. Напишите подробнее о количестве точек учета.',
+                'Мы предлагаем подписку от 12 000 рублей в месяц. Есть возможность начать с бесплатного пилота на 3 месяца.'
+            ],
+            
+            // Как работает
+            'как работает|принцип работы|как это работает': [
+                'Принцип работы в 4 шага:\n1️⃣ Устанавливаем IoT-датчики на ваше оборудование\n2️⃣ Собираем данные в защищенном облаке\n3️⃣ AI анализирует и выявляет аномалии\n4️⃣ Вы получаете рекомендации и экономите до 25%',
+                'Всё просто: датчики → аналитика → рекомендации → экономия. Без замены оборудования и сложного внедрения.',
+                'Мы интегрируемся с существующими приборами учета, собираем данные, а нейросеть находит закономерности и точки оптимизации.'
+            ],
+            
+            // Экономия
+            'экономия|сколько экономим|проценты': [
+                'Наши клиенты экономят от 15% до 30% на счетах за электричество. Конкретная цифра зависит от текущей эффективности вашего оборудования.',
+                'По статистике пилотных проектов, средняя экономия составляет 18.5% в месяц. Окупаемость — от 6 до 18 месяцев.',
+                'Мы гарантируем снижение энергозатрат минимум на 15% после 3 месяцев использования.'
+            ],
+            
+            // Клиенты
+            'клиенты|кто пользуется|примеры': [
+                'Сейчас мы работаем с:\n• Кафе «24/42» (СПб, ул. Типанова 23)\n• ООО «Дэлли групп»\n• ИП Заходякина А.Е.\n\nГотовы рассмотреть ваш проект!',
+                'Наши клиенты — малый и средний бизнес: кафе, офисы, небольшие производства. Каждый получает индивидуальное решение.'
+            ],
+            
+            // Технологии
+            'технологии|как устроено|ai|нейросеть': [
+                'Мы используем:\n• IoT-датчики для сбора данных\n• Облачную инфраструктуру Yandex Cloud\n• Нейросети на базе TensorFlow для прогнозирования\n• Алгоритмы машинного обучения для выявления аномалий',
+                'Наша AI-модель обучается на данных каждого конкретного объекта и достигает точности прогнозов до 95%.'
+            ],
+            
+            // Контакты
+            'контакты|связаться|написать': [
+                'Связаться с нами:\n📧 Email: energy.ai@mail.ru\n📱 VK: vk.com/energy.ai.junior\n📞 Телефон: +7 (___) ___-__-__',
+                'Всегда на связи! Пишите на почту или в сообщения группы VK. Отвечаем в течение часа.'
+            ],
+            
+            // Прощание
+            'пока|до свидания|спасибо пока': [
+                'До свидания! Буду ждать новых вопросов 😊',
+                'Всего доброго! Обращайтесь, если появятся вопросы.',
+                'Пока! Хорошего дня и энергоэффективного бизнеса!'
+            ],
+            
+            // Помощь
+            'помощь|что ты умеешь|можешь': [
+                'Я могу:\n✅ Рассказать о проекте ENERGY.AI\n✅ Объяснить принципы энергоэффективности\n✅ Рассчитать примерную экономию\n✅ Ответить на вопросы о тарифах\n✅ Просто поболтать',
+                'Спрашивайте меня о чём угодно — о технологиях, ценах, клиентах или о том, как начать экономить уже сегодня!'
+            ]
+        };
+
+        // ==================== ФУНКЦИИ ЧАТА ====================
+        function addMessage(text, sender) {
+            const messagesDiv = document.getElementById('chatMessages');
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar';
+            avatar.innerHTML = sender === 'bot' ? '<i class="fas fa-robot"></i>' : '<i class="fas fa-user"></i>';
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            
+            // Форматируем текст с переносами
+            contentDiv.innerHTML = text.replace(/\n/g, '<br>');
+            
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'message-time';
+            timeDiv.textContent = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+            
+            contentDiv.appendChild(timeDiv);
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(contentDiv);
+            messagesDiv.appendChild(messageDiv);
+            
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const messagesDiv = document.getElementById('chatMessages');
+            
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot';
+            typingDiv.id = 'typingIndicator';
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar';
+            avatar.innerHTML = '<i class="fas fa-robot"></i>';
+            
+            const indicator = document.createElement('div');
+            indicator.className = 'typing-indicator';
+            indicator.innerHTML = '<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>';
+            
+            typingDiv.appendChild(avatar);
+            typingDiv.appendChild(indicator);
+            messagesDiv.appendChild(typingDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            
+            isTyping = true;
+        }
+
+        function hideTypingIndicator() {
+            const typingDiv = document.getElementById('typingIndicator');
+            if (typingDiv) {
+                typingDiv.remove();
+            }
+            isTyping = false;
+        }
+
+        function getBotResponse(userMessage) {
+            userMessage = userMessage.toLowerCase();
+            
+            // Ищем подходящий паттерн
+            for (let pattern in knowledgeBase) {
+                const regex = new RegExp(pattern, 'i');
+                if (regex.test(userMessage)) {
+                    const responses = knowledgeBase[pattern];
+                    // Выбираем случайный ответ из массива
+                    return responses[Math.floor(Math.random() * responses.length)];
                 }
             }
             
-            utterance.lang = currentVoice.includes('ru') ? 'ru-RU' : 'en-US';
+            // Ответ по умолчанию
+            const defaultResponses = [
+                'Интересный вопрос! Можете уточнить?',
+                'Я не совсем понял. Расскажите подробнее о вашем вопросе.',
+                'Хороший вопрос! Давайте разберемся вместе. Что именно вас интересует?',
+                'Я могу ответить на вопросы о проекте ENERGY.AI, технологиях или энергоэффективности. Спрашивайте!'
+            ];
+            return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
             
-            synth.speak(utterance);
+            if (!message || isTyping) return;
+            
+            // Добавляем сообщение пользователя
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Блокируем ввод
+            input.disabled = true;
+            document.querySelector('.send-btn').disabled = true;
+            
+            // Показываем индикатор печати
+            showTypingIndicator();
+            
+            // Имитация обработки нейросетью (случайная задержка)
+            const delay = Math.random() * 1000 + 1000; // 1-2 секунды
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                
+                // Получаем ответ
+                const response = getBotResponse(message);
+                addMessage(response, 'bot');
+                
+                // Разблокируем ввод
+                input.disabled = false;
+                document.querySelector('.send-btn').disabled = false;
+                input.focus();
+            }, delay);
         }
 
         // ==================== РАСПОЗНАВАНИЕ РЕЧИ ====================
@@ -424,12 +534,10 @@
             recognition.onerror = (event) => {
                 console.error('Ошибка:', event.error);
                 document.getElementById('micBtn').classList.remove('listening');
-                document.getElementById('speechStatus').innerHTML = '❌ Ошибка распознавания';
             };
             
             recognition.onend = () => {
                 document.getElementById('micBtn').classList.remove('listening');
-                document.getElementById('speechStatus').innerHTML = 'Готов к работе';
             };
         }
 
@@ -443,170 +551,25 @@
             if (micBtn.classList.contains('listening')) {
                 recognition.stop();
                 micBtn.classList.remove('listening');
-                document.getElementById('speechStatus').innerHTML = 'Готов к работе';
             } else {
                 recognition.start();
                 micBtn.classList.add('listening');
-                document.getElementById('speechStatus').innerHTML = '🎤 Слушаю...';
             }
         }
 
-        // ==================== БАЗА ЗНАНИЙ ====================
-        const knowledgeBase = {
-            friend: {
-                patterns: {
-                    'привет|здравствуй|добрый': 'Привет! Рад тебя видеть! Как дела?',
-                    'что ты умеешь|что можешь': 'Я могу рассказать о проекте ENERGY.AI, помочь с вопросами по энергоэффективности или просто поболтать!',
-                    'energy|проект|что это': 'ENERGY.AI JUNIOR — это платформа для мониторинга энергопотребления. Мы помогаем бизнесу экономить до 30% на электричестве!',
-                    'экономия|сколько экономим': 'Наши клиенты экономят от 15 до 25% на счетах за электричество. А ты хочешь попробовать?',
-                    'как работает|принцип': 'Всё просто: ставим датчики → собираем данные → AI анализирует → даём рекомендации. Без замены оборудования!',
-                    'цена|сколько стоит|стоимость': 'Подписка от 12 000 ₽/мес. А для первых клиентов у нас бесплатный пилотный проект!',
-                    'клиенты|кто пользуется': 'Уже работаем с кафе "24/42" и ООО "Дэлли групп" в Санкт-Петербурге. Хочешь стать следующим?',
-                    'контакты|связаться': 'Пиши на energy.ai@mail.ru или в VK vk.com/energy.ai.junior. Всегда на связи!',
-                    'спасибо|благодарю': 'Пожалуйста! Обращайся ещё 😊',
-                    'пока|до свидания': 'Пока! Буду ждать новых вопросов!'
-                },
-                default: 'Интересно... Расскажи подробнее, а я помогу чем смогу!'
-            },
-            
-            expert: {
-                patterns: {
-                    'привет|здравствуй': 'Здравствуйте. Я эксперт по энергоэффективности. Чем могу помочь?',
-                    'экономия': 'По нашим данным, среднее снижение энергозатрат составляет 18.5% после 3 месяцев использования.',
-                    'технологии': 'В основе платформы: IoT-датчики, облачная инфраструктура и нейросети для прогнозирования.',
-                    'окупаемость': 'Срок окупаемости варьируется от 6 до 18 месяцев в зависимости от масштаба предприятия.',
-                    'внедрение': 'Стандартный цикл внедрения: аудит (3-5 дней), установка (5-7 дней), настройка AI (7-10 дней).',
-                    'точность': 'Точность прогнозов AI-моделей достигает 95% после обучения на данных конкретного объекта.'
-                },
-                default: 'Позвольте проанализировать этот вопрос. Можете уточнить детали?'
-            },
-            
-            motivator: {
-                patterns: {
-                    'привет': 'Йоу! Готов менять мир к лучшему? Вместе мы справимся! 🔥',
-                    'экономия': 'Каждый сэкономленный рубль — это шаг к успеху! Давай посчитаем, сколько сможешь сэкономить ты!',
-                    'цели': 'Ставь амбициозные цели! Мы поможем их достичь!',
-                    'сложно': 'Ничего сложного! Главное — начать, а я помогу на каждом шагу!',
-                    'спасибо': 'Обращайся! Вместе мы сила! 💪'
-                },
-                default: 'Отличный вопрос! Давай разбираться и двигаться вперёд!'
-            },
-            
-            teacher: {
-                patterns: {
-                    'привет': 'Здравствуй! Сегодня узнаем что-то новое об энергоэффективности. Готов?',
-                    'как работает': 'Отличный вопрос! Давай разберём по шагам. Сначала устанавливаются датчики...',
-                    'почему': 'Правильный вопрос! В основе лежит физический закон сохранения энергии...',
-                    'что такое': 'С точки зрения физики, энергия — это способность совершать работу. А мы учимся использовать её эффективно.'
-                },
-                default: 'Попробуем разобраться вместе. Что именно тебя интересует?'
+        // ==================== ПОДСКАЗКИ ====================
+        function useSuggestion(text) {
+            document.getElementById('userInput').value = text;
+            sendMessage();
+        }
+
+        // ==================== ОБРАБОТКА НАЖАТИЙ ====================
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+Enter для отправки
+            if (e.ctrlKey && e.key === 'Enter') {
+                sendMessage();
             }
-        };
-
-        // ==================== ЧАТ ====================
-        function addMessage(text, sender) {
-            const messagesDiv = document.getElementById('chatMessages');
-            const welcomeMsg = document.getElementById('welcomeMessage');
-            if (welcomeMsg) welcomeMsg.style.display = 'none';
-            
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender}`;
-            
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'message-content';
-            contentDiv.textContent = text;
-            
-            const timeDiv = document.createElement('div');
-            timeDiv.className = 'message-time';
-            timeDiv.textContent = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-            
-            contentDiv.appendChild(timeDiv);
-            messageDiv.appendChild(contentDiv);
-            messagesDiv.appendChild(messageDiv);
-            
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        function getBotResponse(message) {
-            message = message.toLowerCase();
-            
-            // Получаем текущий стиль
-            const personality = document.querySelector('.personality-btn.active').dataset.personality;
-            const botData = knowledgeBase[personality] || knowledgeBase.friend;
-            
-            // Ищем совпадения
-            for (let pattern in botData.patterns) {
-                const regex = new RegExp(pattern, 'i');
-                if (regex.test(message)) {
-                    return botData.patterns[pattern];
-                }
-            }
-            
-            return botData.default;
-        }
-
-        function sendMessage() {
-            const input = document.getElementById('userInput');
-            const message = input.value.trim();
-            
-            if (!message) return;
-            
-            addMessage(message, 'user');
-            input.value = '';
-            
-            // Ответ бота
-            setTimeout(() => {
-                const response = getBotResponse(message);
-                addMessage(response, 'bot');
-                speak(response);
-            }, 500);
-        }
-
-        // ==================== ВЫБОР СТИЛЯ ====================
-        document.querySelectorAll('.personality-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.personality-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                const personality = btn.dataset.personality;
-                let status = '';
-                switch(personality) {
-                    case 'friend': status = 'Режим: Друг'; break;
-                    case 'expert': status = 'Режим: Эксперт'; break;
-                    case 'motivator': status = 'Режим: Мотиватор'; break;
-                    case 'teacher': status = 'Режим: Наставник'; break;
-                }
-                document.getElementById('personalityStatus').innerHTML = status;
-                
-                // Приветствие при смене
-                setTimeout(() => {
-                    let greeting = '';
-                    switch(personality) {
-                        case 'friend': greeting = 'Привет! Я стал дружелюбнее. О чём поговорим?'; break;
-                        case 'expert': greeting = 'Режим эксперта активирован. Задавайте вопросы.'; break;
-                        case 'motivator': greeting = 'Йоу! Включаю режим максимальной энергии!'; break;
-                        case 'teacher': greeting = 'Урок начинается! Чему хочешь научиться?'; break;
-                    }
-                    addMessage(greeting, 'bot');
-                    speak(greeting);
-                }, 300);
-            });
         });
-
-        // ==================== ВЫБОР ГОЛОСА ====================
-        document.querySelectorAll('.voice-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.voice-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentVoice = btn.dataset.voice;
-            });
-        });
-
-        // ==================== ИНИЦИАЛИЗАЦИЯ ====================
-        // Приветствие при загрузке
-        setTimeout(() => {
-            addMessage('Привет! Я ENERGY.AI. Спрашивай меня о проекте, экономии энергии или просто болтай!', 'bot');
-        }, 1000);
     </script>
 </body>
 </html>
