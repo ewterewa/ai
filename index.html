@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENERGY.AI JUNIOR — Голографический ассистент</title>
+    <title>ENERGY.AI JUNIOR — Умный ассистент</title>
     <style>
         * {
             margin: 0;
@@ -12,150 +12,158 @@
         }
 
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #0a0f1e, #1a1f2f);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
-        }
-
-        .container {
-            max-width: 1200px;
-            width: 100%;
             padding: 20px;
         }
 
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
         .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 30px;
             text-align: center;
-            margin-bottom: 30px;
+            color: white;
         }
 
         .header h1 {
-            font-size: 48px;
-            background: linear-gradient(135deg, #00c6a7, #04a3d9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 36px;
             margin-bottom: 10px;
         }
 
         .header p {
-            color: #8a9bb5;
-            font-size: 18px;
+            font-size: 16px;
+            opacity: 0.9;
         }
 
         .main-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 30px;
-            padding: 30px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
+            grid-template-columns: 300px 1fr;
+            height: 600px;
         }
 
-        /* Голограмма */
-        .hologram-container {
-            background: rgba(0,0,0,0.3);
-            border-radius: 20px;
+        /* Левая панель */
+        .sidebar {
+            background: #f8f9fa;
             padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 1px solid rgba(0,198,167,0.3);
-            box-shadow: 0 0 30px rgba(0,198,167,0.2);
+            border-right: 1px solid #e9ecef;
         }
 
-        .hologram-title {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #00c6a7;
+        .personality-section {
+            margin-bottom: 30px;
         }
 
-        canvas {
-            width: 100%;
-            height: auto;
-            max-width: 500px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-
-        .status {
-            display: flex;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .status-item {
-            background: rgba(0,198,167,0.1);
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: 1px solid #00c6a7;
-            color: #00c6a7;
-        }
-
-        /* Чат и управление */
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .personality-selector {
-            background: rgba(255,255,255,0.05);
-            border-radius: 15px;
-            padding: 15px;
-        }
-
-        .personality-title {
-            font-size: 16px;
-            color: #8a9bb5;
-            margin-bottom: 10px;
-        }
-
-        .personality-buttons {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+        .section-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            color: #6c757d;
+            margin-bottom: 15px;
+            font-weight: 600;
         }
 
         .personality-btn {
-            padding: 12px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(255,255,255,0.05);
-            color: white;
-            border-radius: 10px;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            background: white;
             cursor: pointer;
             transition: 0.3s;
             text-align: left;
+            font-size: 16px;
+            font-weight: 500;
         }
 
         .personality-btn.active {
-            border-color: #00c6a7;
-            background: rgba(0,198,167,0.1);
-            box-shadow: 0 0 20px rgba(0,198,167,0.3);
+            border-color: #667eea;
+            background: #f0f3ff;
+            box-shadow: 0 4px 12px rgba(102,126,234,0.2);
         }
 
-        .personality-btn:hover {
-            border-color: #00c6a7;
-            background: rgba(0,198,167,0.1);
+        .personality-btn small {
+            display: block;
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 4px;
+            font-weight: normal;
+        }
+
+        .voice-settings {
+            margin-bottom: 30px;
+        }
+
+        .voice-btn {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 8px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .voice-btn.active {
+            background: #e7f3ff;
+            border-color: #667eea;
+        }
+
+        .voice-btn i {
+            width: 20px;
+            color: #667eea;
+        }
+
+        .status-indicator {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #495057;
+            font-size: 14px;
+        }
+
+        .status-item i {
+            color: #667eea;
+        }
+
+        /* Правая панель - чат */
+        .chat-area {
+            display: flex;
+            flex-direction: column;
+            height: 600px;
         }
 
         .chat-messages {
-            background: rgba(255,255,255,0.03);
-            border-radius: 15px;
-            padding: 20px;
-            height: 250px;
+            flex: 1;
             overflow-y: auto;
-            border: 1px solid rgba(255,255,255,0.05);
+            padding: 20px;
+            background: #ffffff;
         }
 
         .message {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
-            gap: 10px;
         }
 
         .message.user {
@@ -163,26 +171,37 @@
         }
 
         .message-content {
-            max-width: 80%;
-            padding: 12px 18px;
-            border-radius: 20px;
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 16px;
             font-size: 14px;
             line-height: 1.5;
+            position: relative;
         }
 
         .message.bot .message-content {
-            background: rgba(0,198,167,0.1);
-            border: 1px solid #00c6a7;
-            color: #e0f2fe;
+            background: #f0f3ff;
+            color: #1a1a1a;
+            border-bottom-left-radius: 4px;
         }
 
         .message.user .message-content {
-            background: rgba(4,163,217,0.1);
-            border: 1px solid #04a3d9;
-            color: #e0f2fe;
+            background: #667eea;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: #adb5bd;
+            margin-top: 5px;
+            text-align: right;
         }
 
         .input-area {
+            padding: 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
             display: flex;
             gap: 10px;
         }
@@ -190,38 +209,44 @@
         .input-area input {
             flex: 1;
             padding: 15px 20px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 30px;
-            color: white;
-            font-size: 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: 0.2s;
+            outline: none;
         }
 
         .input-area input:focus {
-            outline: none;
-            border-color: #00c6a7;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
         }
 
-        .mic-btn {
+        .input-area button {
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: #00c6a7;
             border: none;
+            background: #667eea;
             color: white;
-            font-size: 20px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .mic-btn:hover {
+        .input-area button:hover {
             transform: scale(1.1);
-            background: #009f8a;
+            background: #5a67d8;
+        }
+
+        .mic-btn {
+            background: #48bb78 !important;
         }
 
         .mic-btn.listening {
-            background: #ff4444;
             animation: pulse 1s infinite;
+            background: #f56565 !important;
         }
 
         @keyframes pulse {
@@ -230,286 +255,154 @@
             100% { transform: scale(1); }
         }
 
-        .voice-settings {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
+        .welcome-message {
+            text-align: center;
+            color: #6c757d;
+            padding: 40px;
         }
 
-        .voice-btn {
-            flex: 1;
-            padding: 10px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 10px;
-            color: white;
-            cursor: pointer;
-        }
-
-        .voice-btn.active {
-            border-color: #00c6a7;
-            background: rgba(0,198,167,0.1);
+        .welcome-message i {
+            font-size: 48px;
+            color: #667eea;
+            margin-bottom: 20px;
         }
     </style>
-    <!-- Font Awesome иконки -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>ENERGY.AI JUNIOR</h1>
-            <p>Голографический AI-ассистент с голосовым интерфейсом</p>
+            <p>Умный ассистент по энергоэффективности</p>
         </div>
 
         <div class="main-content">
-            <!-- Левая часть: голограмма -->
-            <div class="hologram-container">
-                <div class="hologram-title">Голограмма ENERGY.AI</div>
-                <canvas id="hologramCanvas" width="500" height="500"></canvas>
-                <div class="status">
-                    <div class="status-item" id="emotionStatus">😊 Дружелюбный</div>
-                    <div class="status-item" id="speakStatus">🎤 Слушаю...</div>
+            <!-- Левая панель -->
+            <div class="sidebar">
+                <div class="personality-section">
+                    <div class="section-title">Выберите стиль общения</div>
+                    <button class="personality-btn active" data-personality="friend">
+                        🤝 Друг
+                        <small>Простой и дружелюбный</small>
+                    </button>
+                    <button class="personality-btn" data-personality="expert">
+                        👨‍🔬 Эксперт
+                        <small>Профессиональный и точный</small>
+                    </button>
+                    <button class="personality-btn" data-personality="motivator">
+                        💪 Мотиватор
+                        <small>Энергичный и позитивный</small>
+                    </button>
+                    <button class="personality-btn" data-personality="teacher">
+                        👩‍🏫 Наставник
+                        <small>Обучающий и подробный</small>
+                    </button>
+                </div>
+
+                <div class="voice-settings">
+                    <div class="section-title">Голос ассистента</div>
+                    <button class="voice-btn active" data-voice="ru-RU-male">
+                        <i class="fas fa-user"></i>
+                        Александр (мужской)
+                    </button>
+                    <button class="voice-btn" data-voice="ru-RU-female">
+                        <i class="fas fa-user-circle"></i>
+                        Елена (женский)
+                    </button>
+                    <button class="voice-btn" data-voice="en-US-male">
+                        <i class="fas fa-globe"></i>
+                        John (English)
+                    </button>
+                </div>
+
+                <div class="status-indicator">
+                    <div class="status-item">
+                        <i class="fas fa-microphone"></i>
+                        <span id="speechStatus">Готов к работе</span>
+                    </div>
+                    <div class="status-item" style="margin-top: 10px;">
+                        <i class="fas fa-comment"></i>
+                        <span id="personalityStatus">Режим: Друг</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Правая часть: управление -->
-            <div class="chat-container">
-                <!-- Выбор личности -->
-                <div class="personality-selector">
-                    <div class="personality-title">Выберите тип ассистента:</div>
-                    <div class="personality-buttons">
-                        <button class="personality-btn active" data-personality="friend">
-                            🤝 Друг<br>
-                            <small style="color:#8a9bb5;">Простой и понятный</small>
-                        </button>
-                        <button class="personality-btn" data-personality="expert">
-                            👨‍🔬 Эксперт<br>
-                            <small style="color:#8a9bb5;">Профессиональный</small>
-                        </button>
-                        <button class="personality-btn" data-personality="motivator">
-                            💪 Мотиватор<br>
-                            <small style="color:#8a9bb5;">Энергичный</small>
-                        </button>
-                        <button class="personality-btn" data-personality="teacher">
-                            👩‍🏫 Наставник<br>
-                            <small style="color:#8a9bb5;">Обучающий</small>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Чат -->
+            <!-- Правая панель - чат -->
+            <div class="chat-area">
                 <div class="chat-messages" id="chatMessages">
-                    <div class="message bot">
-                        <div class="message-content">
-                            Привет! Я ENERGY.AI — твой голографический помощник. Могу рассказать о проекте, энергоэффективности или просто поболтать. Что тебя интересует?
-                        </div>
+                    <div class="welcome-message" id="welcomeMessage">
+                        <i class="fas fa-robot"></i>
+                        <h3>Привет! Я ENERGY.AI</h3>
+                        <p>Задай любой вопрос о проекте, энергоэффективности или просто поболтай со мной</p>
                     </div>
                 </div>
 
-                <!-- Ввод -->
                 <div class="input-area">
                     <input type="text" id="userInput" placeholder="Напишите сообщение..." onkeypress="if(event.key === 'Enter') sendMessage()">
                     <button class="mic-btn" id="micBtn" onclick="toggleListening()">
                         <i class="fas fa-microphone"></i>
                     </button>
-                </div>
-
-                <!-- Настройки голоса -->
-                <div class="voice-settings">
-                    <button class="voice-btn active" data-voice="ru-RU" onclick="setVoice('ru-RU')">🇷🇺 Русский</button>
-                    <button class="voice-btn" data-voice="en-US" onclick="setVoice('en-US')">🇬🇧 English</button>
-                    <button class="voice-btn" onclick="toggleVolume()">🔊 Громкость</button>
+                    <button onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // ==================== ГОЛОГРАММА ====================
-        const canvas = document.getElementById('hologramCanvas');
-        const ctx = canvas.getContext('2d');
+        // ==================== НАСТРОЙКИ ГОЛОСА ====================
+        let synth = window.speechSynthesis;
+        let currentVoice = 'ru-RU-male';
+        let voices = [];
         
-        let time = 0;
-        let mouthOpen = 0;
-        let blink = 0;
-        let emotion = 'neutral';
-        let personality = 'friend';
-        let isTalking = false;
-
-        // Анимация голограммы
-        function drawHologram() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Эффект голограммы
-            ctx.shadowColor = '#00c6a7';
-            ctx.shadowBlur = 20;
-            
-            // Рисуем лицо
-            ctx.save();
-            
-            // Голова (овал)
-            ctx.beginPath();
-            ctx.ellipse(250, 200, 80, 100, 0, 0, Math.PI * 2);
-            ctx.strokeStyle = '#00c6a7';
-            ctx.lineWidth = 2;
-            ctx.setLineDash([10, 5]);
-            ctx.stroke();
-            ctx.setLineDash([]);
-            
-            // Эффект сканирования
-            ctx.beginPath();
-            ctx.ellipse(250, 200 + Math.sin(time) * 5, 80, 100, 0, 0, Math.PI * 2);
-            ctx.strokeStyle = 'rgba(0,198,167,0.3)';
-            ctx.lineWidth = 1;
-            ctx.stroke();
-
-            // Глаза
-            ctx.fillStyle = '#00c6a7';
-            
-            // Левая глазница
-            ctx.beginPath();
-            ctx.ellipse(210, 160, 15, 10, 0, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(0,198,167,0.3)';
-            ctx.fill();
-            
-            // Правая глазница
-            ctx.beginPath();
-            ctx.ellipse(290, 160, 15, 10, 0, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Зрачки (моргание)
-            if (blink > 0) {
-                blink -= 0.02;
-            } else {
-                blink = Math.random() * 0.05;
+        // Загружаем голоса
+        function loadVoices() {
+            voices = synth.getVoices();
+        }
+        
+        if (synth) {
+            loadVoices();
+            if (speechSynthesis.onvoiceschanged !== undefined) {
+                speechSynthesis.onvoiceschanged = loadVoices;
             }
-            
-            if (blink < 0.02) {
-                // Глаза закрыты
-                ctx.fillStyle = '#00c6a7';
-                ctx.fillRect(200, 155, 20, 2);
-                ctx.fillRect(280, 155, 20, 2);
-            } else {
-                // Глаза открыты
-                ctx.fillStyle = '#00ffc6';
-                ctx.beginPath();
-                ctx.arc(210, 160, 5, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.arc(290, 160, 5, 0, Math.PI * 2);
-                ctx.fill();
-            }
-            
-            // Рот (двигается при разговоре)
-            ctx.beginPath();
-            if (isTalking) {
-                mouthOpen = 20 + Math.sin(time * 20) * 10;
-            } else {
-                mouthOpen = 10 + Math.sin(time) * 2;
-            }
-            
-            ctx.ellipse(250, 230, 30, mouthOpen / 2, 0, 0, Math.PI * 2);
-            ctx.strokeStyle = '#00c6a7';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            
-            // Брови
-            ctx.beginPath();
-            ctx.moveTo(180, 120);
-            ctx.lineTo(210, 130);
-            ctx.stroke();
-            
-            ctx.beginPath();
-            ctx.moveTo(320, 120);
-            ctx.lineTo(290, 130);
-            ctx.stroke();
-            
-            // Руки (жестикуляция)
-            ctx.save();
-            ctx.translate(150, 250);
-            ctx.rotate(Math.sin(time * 2) * 0.1);
-            ctx.beginPath();
-            ctx.ellipse(0, 0, 30, 10, 0, 0, Math.PI * 2);
-            ctx.strokeStyle = 'rgba(0,198,167,0.5)';
-            ctx.stroke();
-            ctx.restore();
-            
-            ctx.save();
-            ctx.translate(350, 250);
-            ctx.rotate(Math.cos(time * 2) * 0.1);
-            ctx.beginPath();
-            ctx.ellipse(0, 0, 30, 10, 0, 0, Math.PI * 2);
-            ctx.stroke();
-            ctx.restore();
-            
-            ctx.restore();
-            
-            time += 0.05;
-            requestAnimationFrame(drawHologram);
         }
 
-        // ==================== СИНТЕЗ РЕЧИ (ВСТРОЕННЫЙ) ====================
-        let currentVoice = 'ru-RU';
-        let synth = window.speechSynthesis;
-        
         function speak(text) {
             if (!synth) {
-                console.warn('Синтез речи не поддерживается');
+                alert('Синтез речи не поддерживается в вашем браузере');
                 return;
             }
-            
-            // Останавливаем предыдущую речь
-            synth.cancel();
-            
-            isTalking = true;
-            document.getElementById('speakStatus').innerHTML = '🔊 Говорю...';
-            
+
+            synth.cancel(); // Останавливаем предыдущую речь
+
             const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = currentVoice;
-            utterance.rate = 1;
+            
+            // Настройки голоса
+            utterance.rate = 0.9; // Немного медленнее
             utterance.pitch = 1;
             utterance.volume = 1;
             
             // Выбираем голос
-            const voices = synth.getVoices();
-            if (currentVoice === 'ru-RU') {
-                const ruVoice = voices.find(v => v.lang.includes('ru'));
-                if (ruVoice) utterance.voice = ruVoice;
-            } else {
-                const enVoice = voices.find(v => v.lang.includes('en'));
-                if (enVoice) utterance.voice = enVoice;
+            if (voices.length > 0) {
+                if (currentVoice === 'ru-RU-male') {
+                    // Ищем мужской русский голос
+                    const ruMaleVoice = voices.find(v => v.lang.includes('ru') && v.name.includes('Alexander'));
+                    utterance.voice = ruMaleVoice || voices.find(v => v.lang.includes('ru'));
+                } else if (currentVoice === 'ru-RU-female') {
+                    // Ищем женский русский голос
+                    const ruFemaleVoice = voices.find(v => v.lang.includes('ru') && v.name.includes('Milena'));
+                    utterance.voice = ruFemaleVoice || voices.find(v => v.lang.includes('ru'));
+                } else {
+                    // Английский голос
+                    utterance.voice = voices.find(v => v.lang.includes('en'));
+                }
             }
             
-            utterance.onend = () => {
-                isTalking = false;
-                document.getElementById('speakStatus').innerHTML = '🎤 Слушаю...';
-            };
-            
-            utterance.onerror = () => {
-                isTalking = false;
-                document.getElementById('speakStatus').innerHTML = '🎤 Слушаю...';
-            };
+            utterance.lang = currentVoice.includes('ru') ? 'ru-RU' : 'en-US';
             
             synth.speak(utterance);
-        }
-
-        // Загружаем голоса
-        if (synth) {
-            synth.onvoiceschanged = () => {
-                synth.getVoices();
-            };
-        }
-
-        function setVoice(lang) {
-            currentVoice = lang;
-            document.querySelectorAll('.voice-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-        }
-
-        function toggleVolume() {
-            alert('🔊 Громкость регулируется на устройстве');
         }
 
         // ==================== РАСПОЗНАВАНИЕ РЕЧИ ====================
@@ -529,22 +422,20 @@
             };
             
             recognition.onerror = (event) => {
-                console.error('Ошибка распознавания:', event.error);
+                console.error('Ошибка:', event.error);
                 document.getElementById('micBtn').classList.remove('listening');
-                document.getElementById('speakStatus').innerHTML = '🎤 Ошибка';
-                setTimeout(() => {
-                    document.getElementById('speakStatus').innerHTML = '🎤 Слушаю...';
-                }, 2000);
+                document.getElementById('speechStatus').innerHTML = '❌ Ошибка распознавания';
             };
             
             recognition.onend = () => {
                 document.getElementById('micBtn').classList.remove('listening');
+                document.getElementById('speechStatus').innerHTML = 'Готов к работе';
             };
         }
 
         function toggleListening() {
             if (!recognition) {
-                alert('Распознавание речи не поддерживается в вашем браузере.\nИспользуйте Chrome или Edge.');
+                alert('Распознавание речи не поддерживается. Используйте Chrome или Edge.');
                 return;
             }
             
@@ -552,58 +443,72 @@
             if (micBtn.classList.contains('listening')) {
                 recognition.stop();
                 micBtn.classList.remove('listening');
-                document.getElementById('speakStatus').innerHTML = '🎤 Слушаю...';
+                document.getElementById('speechStatus').innerHTML = 'Готов к работе';
             } else {
                 recognition.start();
                 micBtn.classList.add('listening');
-                document.getElementById('speakStatus').innerHTML = '🎤 Слушаю...';
+                document.getElementById('speechStatus').innerHTML = '🎤 Слушаю...';
             }
         }
 
         // ==================== БАЗА ЗНАНИЙ ====================
         const knowledgeBase = {
-            'friend': {
-                'привет': 'Привет! Как дела?',
-                'здравствуй': 'Здравствуй! Рад тебя видеть!',
-                'что ты умеешь': 'Я помогаю с проектом ENERGY.AI JUNIOR. Могу рассказать про энергоэффективность, ответить на вопросы или просто поболтать!',
-                'энергия': 'Наш проект помогает бизнесу экономить до 30% на электричестве! Круто, правда?',
-                'экономия': 'Мы помогаем снизить счета за электричество на 15-25% без замены оборудования!',
-                'как работает': 'Мы устанавливаем датчики, собираем данные, AI анализирует и дает рекомендации. Всё просто!',
-                'цена': 'Стоимость подписки от 12 000 рублей в месяц. Есть бесплатный пилотный проект!',
-                'кто клиенты': 'У нас уже есть клиенты: кафе "24/42" и ООО "Дэлли групп" в Санкт-Петербурге.',
-                'контакты': 'Напиши нам на energy.ai@mail.ru или в VK vk.com/energy.ai.junior',
-                'по умолчанию': 'Интересный вопрос! Дай подумать... А хочешь расскажу про наш проект?'
+            friend: {
+                patterns: {
+                    'привет|здравствуй|добрый': 'Привет! Рад тебя видеть! Как дела?',
+                    'что ты умеешь|что можешь': 'Я могу рассказать о проекте ENERGY.AI, помочь с вопросами по энергоэффективности или просто поболтать!',
+                    'energy|проект|что это': 'ENERGY.AI JUNIOR — это платформа для мониторинга энергопотребления. Мы помогаем бизнесу экономить до 30% на электричестве!',
+                    'экономия|сколько экономим': 'Наши клиенты экономят от 15 до 25% на счетах за электричество. А ты хочешь попробовать?',
+                    'как работает|принцип': 'Всё просто: ставим датчики → собираем данные → AI анализирует → даём рекомендации. Без замены оборудования!',
+                    'цена|сколько стоит|стоимость': 'Подписка от 12 000 ₽/мес. А для первых клиентов у нас бесплатный пилотный проект!',
+                    'клиенты|кто пользуется': 'Уже работаем с кафе "24/42" и ООО "Дэлли групп" в Санкт-Петербурге. Хочешь стать следующим?',
+                    'контакты|связаться': 'Пиши на energy.ai@mail.ru или в VK vk.com/energy.ai.junior. Всегда на связи!',
+                    'спасибо|благодарю': 'Пожалуйста! Обращайся ещё 😊',
+                    'пока|до свидания': 'Пока! Буду ждать новых вопросов!'
+                },
+                default: 'Интересно... Расскажи подробнее, а я помогу чем смогу!'
             },
-            'expert': {
-                'привет': 'Здравствуйте. Я эксперт по энергоэффективности. Чем могу помочь?',
-                'экономия': 'На основе анализа данных, средняя экономия составляет 18.5% при внедрении нашей системы.',
-                'технологии': 'Мы используем IoT-датчики, облачные вычисления и нейросети для прогнозирования.',
-                'энергия': 'Энергоэффективность — ключевой фактор снижения операционных расходов.',
-                'окупаемость': 'Средний срок окупаемости — от 6 до 18 месяцев в зависимости от масштаба.',
-                'внедрение': 'Процесс занимает 2-4 недели: аудит, установка, настройка, обучение.',
-                'по умолчанию': 'Позвольте мне проанализировать этот вопрос с технической точки зрения.'
+            
+            expert: {
+                patterns: {
+                    'привет|здравствуй': 'Здравствуйте. Я эксперт по энергоэффективности. Чем могу помочь?',
+                    'экономия': 'По нашим данным, среднее снижение энергозатрат составляет 18.5% после 3 месяцев использования.',
+                    'технологии': 'В основе платформы: IoT-датчики, облачная инфраструктура и нейросети для прогнозирования.',
+                    'окупаемость': 'Срок окупаемости варьируется от 6 до 18 месяцев в зависимости от масштаба предприятия.',
+                    'внедрение': 'Стандартный цикл внедрения: аудит (3-5 дней), установка (5-7 дней), настройка AI (7-10 дней).',
+                    'точность': 'Точность прогнозов AI-моделей достигает 95% после обучения на данных конкретного объекта.'
+                },
+                default: 'Позвольте проанализировать этот вопрос. Можете уточнить детали?'
             },
-            'motivator': {
-                'привет': 'Йоу! Готов экономить энергию? Вместе мы горы свернем!',
-                'цели': 'Ставь амбициозные цели! Наша система поможет их достичь!',
-                'сложно': 'Ничего сложного! Я рядом и всегда помогу разобраться!',
-                'энергия': 'Энергия — это сила! Давай использовать её с умом!',
-                'экономия': 'Каждый сэкономленный рубль — это шаг к успеху!',
-                'по умолчанию': 'Давай к действию! Спрашивай что угодно!'
+            
+            motivator: {
+                patterns: {
+                    'привет': 'Йоу! Готов менять мир к лучшему? Вместе мы справимся! 🔥',
+                    'экономия': 'Каждый сэкономленный рубль — это шаг к успеху! Давай посчитаем, сколько сможешь сэкономить ты!',
+                    'цели': 'Ставь амбициозные цели! Мы поможем их достичь!',
+                    'сложно': 'Ничего сложного! Главное — начать, а я помогу на каждом шагу!',
+                    'спасибо': 'Обращайся! Вместе мы сила! 💪'
+                },
+                default: 'Отличный вопрос! Давай разбираться и двигаться вперёд!'
             },
-            'teacher': {
-                'привет': 'Здравствуй, ученик! Сегодня узнаем много нового об энергии!',
-                'обучение': 'Отличный вопрос для изучения! Давай разберем по шагам...',
-                'вопрос': 'Правильный вопрос - половина ответа. Что именно тебя интересует?',
-                'энергия': 'Энергия не возникает из ниоткуда и не исчезает. Она просто тратится впустую без нашего контроля.',
-                'ai': 'Искусственный интеллект обучается на данных и находит закономерности, которые человек может не заметить.',
-                'по умолчанию': 'Попробуем разобраться вместе. Это познавательно!'
+            
+            teacher: {
+                patterns: {
+                    'привет': 'Здравствуй! Сегодня узнаем что-то новое об энергоэффективности. Готов?',
+                    'как работает': 'Отличный вопрос! Давай разберём по шагам. Сначала устанавливаются датчики...',
+                    'почему': 'Правильный вопрос! В основе лежит физический закон сохранения энергии...',
+                    'что такое': 'С точки зрения физики, энергия — это способность совершать работу. А мы учимся использовать её эффективно.'
+                },
+                default: 'Попробуем разобраться вместе. Что именно тебя интересует?'
             }
         };
 
-        // ==================== ОТПРАВКА СООБЩЕНИЙ ====================
+        // ==================== ЧАТ ====================
         function addMessage(text, sender) {
-            const messages = document.getElementById('chatMessages');
+            const messagesDiv = document.getElementById('chatMessages');
+            const welcomeMsg = document.getElementById('welcomeMessage');
+            if (welcomeMsg) welcomeMsg.style.display = 'none';
+            
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${sender}`;
             
@@ -611,25 +516,33 @@
             contentDiv.className = 'message-content';
             contentDiv.textContent = text;
             
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'message-time';
+            timeDiv.textContent = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+            
+            contentDiv.appendChild(timeDiv);
             messageDiv.appendChild(contentDiv);
-            messages.appendChild(messageDiv);
-            messages.scrollTop = messages.scrollHeight;
+            messagesDiv.appendChild(messageDiv);
+            
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
 
-        function getBotResponse(userMessage) {
-            userMessage = userMessage.toLowerCase();
+        function getBotResponse(message) {
+            message = message.toLowerCase();
             
-            const personalityType = document.querySelector('.personality-btn.active').dataset.personality;
-            const responses = knowledgeBase[personalityType] || knowledgeBase.friend;
+            // Получаем текущий стиль
+            const personality = document.querySelector('.personality-btn.active').dataset.personality;
+            const botData = knowledgeBase[personality] || knowledgeBase.friend;
             
-            // Ищем ключевые слова
-            for (let key in responses) {
-                if (userMessage.includes(key)) {
-                    return responses[key];
+            // Ищем совпадения
+            for (let pattern in botData.patterns) {
+                const regex = new RegExp(pattern, 'i');
+                if (regex.test(message)) {
+                    return botData.patterns[pattern];
                 }
             }
             
-            return responses['по умолчанию'];
+            return botData.default;
         }
 
         function sendMessage() {
@@ -641,63 +554,59 @@
             addMessage(message, 'user');
             input.value = '';
             
-            // Получаем ответ
-            const response = getBotResponse(message);
-            
-            // Небольшая задержка для естественности
+            // Ответ бота
             setTimeout(() => {
+                const response = getBotResponse(message);
                 addMessage(response, 'bot');
                 speak(response);
             }, 500);
         }
 
-        // ==================== ВЫБОР ЛИЧНОСТИ ====================
+        // ==================== ВЫБОР СТИЛЯ ====================
         document.querySelectorAll('.personality-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('.personality-btn').forEach(b => {
-                    b.classList.remove('active');
-                });
+                document.querySelectorAll('.personality-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 
-                personality = btn.dataset.personality;
-                
-                // Приветствие при смене личности
-                let greeting = '';
+                const personality = btn.dataset.personality;
+                let status = '';
                 switch(personality) {
-                    case 'friend':
-                        greeting = 'Привет! Я стал дружелюбнее. О чем поговорим?';
-                        document.getElementById('emotionStatus').innerHTML = '😊 Дружелюбный';
-                        break;
-                    case 'expert':
-                        greeting = 'Режим эксперта активирован. Задавайте вопросы.';
-                        document.getElementById('emotionStatus').innerHTML = '👨‍🔬 Эксперт';
-                        break;
-                    case 'motivator':
-                        greeting = 'Йоу! Включаю режим максимальной энергии!';
-                        document.getElementById('emotionStatus').innerHTML = '💪 Мотиватор';
-                        break;
-                    case 'teacher':
-                        greeting = 'Урок начинается! Чему хочешь научиться?';
-                        document.getElementById('emotionStatus').innerHTML = '👩‍🏫 Наставник';
-                        break;
+                    case 'friend': status = 'Режим: Друг'; break;
+                    case 'expert': status = 'Режим: Эксперт'; break;
+                    case 'motivator': status = 'Режим: Мотиватор'; break;
+                    case 'teacher': status = 'Режим: Наставник'; break;
                 }
+                document.getElementById('personalityStatus').innerHTML = status;
                 
+                // Приветствие при смене
                 setTimeout(() => {
+                    let greeting = '';
+                    switch(personality) {
+                        case 'friend': greeting = 'Привет! Я стал дружелюбнее. О чём поговорим?'; break;
+                        case 'expert': greeting = 'Режим эксперта активирован. Задавайте вопросы.'; break;
+                        case 'motivator': greeting = 'Йоу! Включаю режим максимальной энергии!'; break;
+                        case 'teacher': greeting = 'Урок начинается! Чему хочешь научиться?'; break;
+                    }
                     addMessage(greeting, 'bot');
                     speak(greeting);
                 }, 300);
             });
         });
 
-        // ==================== ЗАПУСК ====================
-        drawHologram();
+        // ==================== ВЫБОР ГОЛОСА ====================
+        document.querySelectorAll('.voice-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.voice-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentVoice = btn.dataset.voice;
+            });
+        });
 
-        // Добавляем информацию о голосах
-        if (synth) {
-            setTimeout(() => {
-                console.log('Голоса загружены');
-            }, 1000);
-        }
+        // ==================== ИНИЦИАЛИЗАЦИЯ ====================
+        // Приветствие при загрузке
+        setTimeout(() => {
+            addMessage('Привет! Я ENERGY.AI. Спрашивай меня о проекте, экономии энергии или просто болтай!', 'bot');
+        }, 1000);
     </script>
 </body>
 </html>
